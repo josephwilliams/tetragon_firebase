@@ -1,7 +1,7 @@
 import React from 'react';
-import AnonymousLogin from './auth/anon_auth';
-import GoogleLogin from './auth/google_auth';
-import FacebookLogin from './auth/facebook_auth';
+import AnonymousLogin from '../auth/anon_auth';
+import GoogleLogin from '../auth/google_auth';
+import FacebookLogin from '../auth/facebook_auth';
 import SplashProfile from './splash_profile';
 import SplashProfileAnon from './splash_profile_anon';
 

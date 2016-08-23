@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import TwoPlayerGame from './components/game/game_comp';
-import Splash from './components/splash';
+import Splash from './components/splash/splash';
 
 //Router
 var ReactRouter = require('react-router');

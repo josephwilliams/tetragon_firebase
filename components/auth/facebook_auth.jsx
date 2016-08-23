@@ -16,7 +16,6 @@ export default class FacebookLogin extends React.Component {
       // The signed-in user info.
       var user = result.user;
     }).catch(function(error) {
-      // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
       // The email of the user's account used.
