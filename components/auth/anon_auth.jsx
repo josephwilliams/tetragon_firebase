@@ -27,6 +27,8 @@ export default class AnonymousLogin extends React.Component {
         console.log("anonymous user signed out");
       }
     });
+
+    this.props.checkCurrentUser();
   }
 
   render () {

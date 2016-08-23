@@ -31,6 +31,8 @@ export default class GoogleLogin extends React.Component {
       var credential = error.credential;
       // ...
     });
+
+    this.props.checkCurrentUser();
   }
 
   render () {

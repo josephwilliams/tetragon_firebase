@@ -7,8 +7,12 @@ export default class SplashProfile extends React.Component {
 
   render () {
     return (
-      <div className="profile-container">
-
+      <div className="start-splash-container">
+        profile page
+        woot
+        woot
+        wooot
+        wooooott
       </div>
     );
   }
