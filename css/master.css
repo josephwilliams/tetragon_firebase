@@ -1,0 +1,254 @@
+html {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+body {
+  background: red; /* For browsers that do not support gradients */
+  background: -webkit-radial-gradient(circle, #00ffb1, #8ef3e9, #764f77); /* Safari */
+  background: -o-radial-gradient(circle, #00ffb1, #8ef3e9, #764f77); /* Opera 11.6 to 12.0 */
+  background: -moz-radial-gradient(circle, #00ffb1, #8ef3e9, #764f77); /* Firefox 3.6 to 15 */
+  background: radial-gradient(circle, #1b4f3f, #608b86, #e1fff1);
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;
+  cursor: default;
+  position: relative;
+  bottom: 30px;
+}
+
+.bad-load {
+  color: #fff;
+  font-family: 'Bungee Outline', cursive;
+  font-size: 60px;
+}
+
+.content {
+}
+
+.game-container {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.header-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.header-container h1 {
+  font-family: 'Bungee Outline', cursive;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+  position: relative;
+  top: 15px;
+  text-shadow: 0px 1px 5px black;
+}
+
+.board-container {
+  padding: 0px 50px 70px 50px;
+  margin: 0 auto;
+  width: 550px;
+  height: 616px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-radius: 100px;
+}
+
+.tiles-container {
+  width: 550px;
+  height: 535px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.game-message-container {
+  width: 100%;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.scoreboard-container {
+  width: 250px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  margin: 20px 0px 10px 0px;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0px 0px 10px rgba(94, 94, 94, 0.68);
+  font-family: 'Bungee Hairline', cursive;
+  color: white;
+  font-weight: 900;
+  padding: 5px;
+  border-radius: 50px 50px 10px 10px;
+  text-shadow: 0px 0px 5px black;
+}
+
+.scoreboard-container .top {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.scoreboard-container .top .score-container {
+  padding: 10px;
+  display: flex;
+}
+
+.how-container {
+  font-family: 'Bungee Hairline', cursive;
+  font-weight: 900;
+  font-size: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 5px;
+}
+
+.how-container h5 {
+  cursor: pointer;
+  transition: all 1.1s ease-out;
+}
+
+.how-container h5:hover {
+  background: rgba(255, 255, 255, 0.32);
+  transition: all 1s ease-out;
+}
+
+h5 {
+  margin: 0 auto;
+  text-shadow: 0px 0px 5px black;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 5px 5px 26px 25px;
+  padding: 5px 5px 9px 6px;
+  background: rgba(255, 255, 255, 0.12);
+  text-shadow: 0px 0px 5px black;
+  box-shadow: 0px 0px 10px rgba(94, 94, 94, 0.68);
+  width: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.current-player-container {
+  font-family: 'Bungee Hairline', cursive;
+  font-weight: 900;
+  font-size: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 5px;
+}
+
+/* INSTRUCTIONS MODAL */
+.instructions-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: rgba(255,255,255,0.9);
+}
+
+.instructions-container h1 {
+  font-family: 'Bungee Outline', cursive;
+  /*color: rgba(255, 255, 255, 0.78);*/
+  color: rgba(255,255,255,0.9);
+  margin: 0;
+  text-shadow: 0px 1px 5px black;
+}
+
+.instructions-container .header {
+  font-family: 'Bungee Hairline', cursive;
+  font-weight: 900;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.instructions-container  .content {
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.instructions-container .content .rule {
+  padding: 6px 0px;
+  display: flex;
+}
+
+.instructions-container .content .example {
+  padding: 6px 0px;
+  display: flex;
+  justify-content: space-around;;
+}
+
+.instructions-container .footer {
+  font-family: 'Bungee Hairline', cursive;
+  font-weight: 900;
+  font-size: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.62);
+  padding: 5px 8px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.56);
+  box-shadow: 0px 0px 10px rgba(255, 244, 244, 0.54);
+  margin: 10px;
+  cursor: pointer;
+  color: black;
+  transition: all ease 0.6s;
+}
+
+.instructions-container .footer:hover {
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.bottom-container {
+  width: 150px;
+  height: 25px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  margin: 10px 0px;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0px 0px 10px rgba(94, 94, 94, 0.68);
+  font-family: 'Bungee Hairline', cursive;
+  font-size: 18px;
+  color: white;
+  font-weight: 900;
+  padding: 5px;
+  border-radius: 10px 10px 50px 50px;
+  text-shadow: 0px 0px 5px black;
+  cursor: pointer;
+  transition: all 1s ease-out;
+}
+
+.bottom-container:hover {
+  background: rgba(255, 255, 255, 0.32);
+  transition: all 1s ease-out;
+}
+
+.bottom-container-hide {
+  display: none;
+}
+
+/*splash */
+
+.splash-container {
+  color: #fff;
+}
