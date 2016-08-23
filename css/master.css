@@ -154,6 +154,34 @@ h5 {
   justify-content: center;
   align-items: center;
   padding-bottom: 5px;
+  position: relative;
+}
+
+.return-home-container {
+  position: absolute;
+  right: -29px;
+  top: -13px;
+}
+
+.return-home-container h5 {
+  margin: 0 auto;
+  text-shadow: 0px 0px 5px black;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 25px 25px 5px 5px;
+  padding: 5px 6px 2px 8px;
+  background: rgba(255, 255, 255, 0.12);
+  text-shadow: 0px 0px 5px black;
+  box-shadow: 0px 0px 10px rgba(94, 94, 94, 0.68);
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  transition: all 1s ease-out;
+}
+
+.return-home-container h5:hover {
+  background: rgba(255, 255, 255, 0.32);
+  transition: all 1s ease-out;
+  cursor: pointer;
 }
 
 /* INSTRUCTIONS MODAL */
@@ -324,4 +352,36 @@ h5 {
   -moz-transition: all 0.5s ease-in-out;
   -ms-transition: all 0.5s ease-in-out;
   -o-transition: all 0.5s ease-in-out;
+}
+
+.anon-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.logout-user {
+
+}
+
+.logout-user h5 {
+  margin: 0 auto;
+  text-shadow: 0px 0px 5px black;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 5px 5px 26px 25px;
+  padding: 5px 12px 9px 12px;
+  background: rgba(255, 255, 255, 0.12);
+  text-shadow: 0px 0px 5px black;
+  box-shadow: 0px 0px 10px rgba(94, 94, 94, 0.68);
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  transition: all 1s ease-out;
+}
+
+.logout-user h5:hover {
+  background: rgba(255, 255, 255, 0.32);
+  transition: all 1s ease-out;
+  cursor: pointer;
 }

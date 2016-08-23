@@ -11,6 +11,21 @@ var Route = ReactRouter.Route;
 var IndexRoute = ReactRouter.IndexRoute;
 var hashHistory = ReactRouter.hashHistory;
 
+//Firebase
+var firebase = require('firebase/app');
+require('firebase/auth');
+require('firebase/database');
+
+// Initialize Firebase
+const config = {
+  apiKey: "AIzaSyCyutMsgN0n5ErnDaX9mgvoQtWEiqXix9Y",
+  authDomain: "tetragon-3e324.firebaseapp.com",
+  databaseURL: "https://tetragon-3e324.firebaseio.com",
+  storageBucket: "",
+};
+
+firebase.initializeApp(config);
+
 var routes = (
   <Router history={hashHistory} >
     <Route path="/" component={App} >

@@ -3,6 +3,7 @@ import AnonymousLogin from './auth/anon_auth';
 import GoogleLogin from './auth/google_auth';
 import FacebookLogin from './auth/facebook_auth';
 import SplashProfile from './splash_profile';
+import SplashProfileAnon from './splash_profile_anon';
 
 var firebase = require('firebase/app');
 require('firebase/auth');
@@ -15,19 +16,6 @@ export default class AuthSplash extends React.Component {
     this.checkCurrentUser = this.checkCurrentUser.bind(this);
   }
 
-  componentWillMount () {
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyCyutMsgN0n5ErnDaX9mgvoQtWEiqXix9Y",
-      authDomain: "tetragon-3e324.firebaseapp.com",
-      databaseURL: "https://tetragon-3e324.firebaseio.com",
-      storageBucket: "",
-    };
-
-    // console.log("firebase", firebase);
-    firebase.initializeApp(config);
-  }
-
   componentDidMount () {
     this.checkCurrentUser();
   }
@@ -37,11 +25,8 @@ export default class AuthSplash extends React.Component {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         that.setState({ user: user });
-        // User is signed in.
-        console.log("user signed in", user);
       } else {
-        // No user is signed in.
-        console.log("no user signed in");
+        that.setState({ user: null });
       }
     });
   }
@@ -50,20 +35,18 @@ export default class AuthSplash extends React.Component {
     let splashNode;
     let user = firebase.auth().currentUser;
     if (user) {
-      console.log("user", user);
-      splashNode = (
-        <div>
-          <SplashProfile user={user} />
-        </div>
-      );
+      if (user.isAnonymous) {
+        splashNode = <SplashProfileAnon user={user} />
+      } else {
+        splashNode = <SplashProfile user={user} />
+      }
     } else {
-      console.log("no user!");
       splashNode = (
         <div>
           <div className="top">
             login or sign up to play online
           </div>
-          <FacebookLogin />
+          <FacebookLogin checkCurrentUser={this.checkCurrentUser} />
           <GoogleLogin checkCurrentUser={this.checkCurrentUser} />
           <AnonymousLogin checkCurrentUser={this.checkCurrentUser} />
         </div>
@@ -71,7 +54,7 @@ export default class AuthSplash extends React.Component {
     }
 
     return (
-      <div>
+      <div className="start-splash-container">
         {splashNode}
       </div>
     );

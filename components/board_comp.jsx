@@ -7,9 +7,13 @@ import Scoreboard from './scoreboard_comp';
 import Footer from './footer_comp';
 import HelperModal from './help_modal';
 
-export default class Board extends React.Component {
+class Board extends React.Component {
   constructor (props) {
     super(props);
+  }
+
+  linkTo (address) {
+    this.context.router.push(address);
   }
 
   showBoard () {
@@ -56,6 +60,12 @@ export default class Board extends React.Component {
           <h5>
             {this.showCurrentPlayer()}
           </h5>
+          <div className="return-home-container"
+               onClick={() => this.linkTo('splash')}>
+            <h5>
+              home
+            </h5>
+          </div>
         </div>
         <Scoreboard redCount={this.props.board.redCount}
                     blueCount={this.props.board.blueCount}
@@ -75,3 +85,9 @@ export default class Board extends React.Component {
     )
   }
 }
+
+Board.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
+export default Board;
