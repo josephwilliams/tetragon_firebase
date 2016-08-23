@@ -14,6 +14,7 @@ export default class AuthSplash extends React.Component {
     super();
     this.state = { user: null };
     this.checkCurrentUser = this.checkCurrentUser.bind(this);
+    this.logoutCurrentUser = this.logoutCurrentUser.bind(this);
   }
 
   componentDidMount () {
@@ -31,14 +32,32 @@ export default class AuthSplash extends React.Component {
     });
   }
 
+  logoutCurrentUser () {
+    let user = firebase.auth().currentUser;
+    let that = this;
+    user.delete().then(function() {
+      that.checkCurrentUser();
+    }, function(error) {
+      console.log("logout error", error);
+    });
+  }
+
   render () {
     let splashNode;
     let user = firebase.auth().currentUser;
     if (user) {
       if (user.isAnonymous) {
-        splashNode = <SplashProfileAnon user={user} />
+        splashNode = (
+          <SplashProfileAnon
+            user={user}
+            logoutCurrentUser={this.logoutCurrentUser} />
+        )
       } else {
-        splashNode = <SplashProfile user={user} />
+        splashNode = (
+          <SplashProfile
+            user={user}
+            logoutCurrentUser={this.logoutCurrentUser} />
+        )
       }
     } else {
       splashNode = (

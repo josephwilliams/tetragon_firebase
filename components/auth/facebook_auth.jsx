@@ -28,7 +28,6 @@ export default class FacebookLogin extends React.Component {
     this.props.checkCurrentUser();
   }
 
-
   render () {
     return (
       <div className="auth-option"
