@@ -1,8 +1,12 @@
 import React from 'react';
 
-export default class StartSplash extends React.Component {
+class StartSplash extends React.Component {
   constructor () {
     super();
+  }
+
+  linkTo (address) {
+    this.context.router.push(address);
   }
 
   render () {
@@ -11,7 +15,8 @@ export default class StartSplash extends React.Component {
       <div className="auth-option">
         play online
       </div>
-      <div className="auth-option">
+      <div className="auth-option"
+           onClick={() => this.linkTo("two_player_game")}>
         multiplayer local
       </div>
       <div className="start-option-soon">
@@ -21,3 +26,9 @@ export default class StartSplash extends React.Component {
     );
   }
 }
+
+StartSplash.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
+export default StartSplash;
