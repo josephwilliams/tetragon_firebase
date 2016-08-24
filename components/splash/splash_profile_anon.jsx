@@ -35,13 +35,15 @@ export default class SplashProfile extends React.Component {
 
   render () {
     return (
-      <div className="anon-profile">
-        {this.anonImage()}
-        <p>{this.anonUsername()}</p>
-        <p>signed in anonymously</p>
-        <div className="logout-user"
-             onClick={() => this.logout()}>
-          <h5>logout</h5>
+      <div className="start-splash-container">
+        <div className="anon-profile">
+          {this.anonImage()}
+          <p>{this.anonUsername()}</p>
+          <p>signed in anonymously</p>
+          <div className="logout-user"
+            onClick={() => this.logout()}>
+            <h5>logout</h5>
+          </div>
         </div>
       </div>
     );

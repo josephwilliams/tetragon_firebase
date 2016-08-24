@@ -34,12 +34,22 @@ export default class AuthSplash extends React.Component {
 
   logoutCurrentUser () {
     let user = firebase.auth().currentUser;
-    let that = this;
-    user.delete().then(function() {
-      that.checkCurrentUser();
-    }, function(error) {
-      console.log("logout error", error);
-    });
+
+    if (user.isAnonymous) {
+      user.delete().then(function() {
+        // Anonymous User Sign-out successfull
+      }, function(error) {
+        console.log("logout error", error);
+      });
+    } else {
+      firebase.auth().signOut().then(function() {
+        // FB/Google-based User Sign-out successful.
+      }, function(error) {
+        console.log("logout error", error);
+      });
+    }
+
+    this.checkCurrentUser();
   }
 
   render () {
@@ -61,9 +71,9 @@ export default class AuthSplash extends React.Component {
       }
     } else {
       splashNode = (
-        <div>
+        <div className="auth-splash-container">
           <div className="top">
-            login or sign up to play online
+            login through facebook, google+, or anonymously to play online
           </div>
           <FacebookLogin checkCurrentUser={this.checkCurrentUser} />
           <GoogleLogin checkCurrentUser={this.checkCurrentUser} />
@@ -73,7 +83,7 @@ export default class AuthSplash extends React.Component {
     }
 
     return (
-      <div className="start-splash-container">
+      <div>
         {splashNode}
       </div>
     );

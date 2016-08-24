@@ -25,14 +25,16 @@ export default class SplashProfile extends React.Component {
   render () {
     console.log(this.props.user);
     return (
-      <div className="user-profile">
-        {this.showImage()}
-        {this.showUsername()}
-        <div className="logout-user"
-           onClick={() => this.props.logoutCurrentUser()}>
-           <h5>logout</h5>
+      <div className="start-splash-container">
+        <div className="user-profile">
+          {this.showImage()}
+          {this.showUsername()}
+          <div className="logout-user"
+             onClick={() => this.props.logoutCurrentUser()}>
+             <h5>logout</h5>
+          </div>
         </div>
-      </div>
+    </div>
     );
   }
 }
