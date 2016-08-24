@@ -1,6 +1,7 @@
 import React from 'react';
 import StartSplash from './start_splash';
 import AuthSplash from './auth_splash';
+import OnlineConfigs from './online_configs';
 
 var firebase = require('firebase/app');
 require('firebase/auth');
@@ -9,20 +10,14 @@ require('firebase/database');
 export default class Splash extends React.Component {
   constructor () {
     super();
+    this.state = { configsContainerClass: "online-config-container-hide" };
+    this.toggleOnlineConfigs = this.toggleOnlineConfigs.bind(this);
   }
 
-  // componentWillMount () {
-  //   // Initialize Firebase
-  //   var config = {
-  //     apiKey: "AIzaSyCyutMsgN0n5ErnDaX9mgvoQtWEiqXix9Y",
-  //     authDomain: "tetragon-3e324.firebaseapp.com",
-  //     databaseURL: "https://tetragon-3e324.firebaseio.com",
-  //     storageBucket: "",
-  //   };
-  //
-  //   // console.log("firebase", firebase);
-  //   firebase.initializeApp(config);
-  // }
+  toggleOnlineConfigs () {
+    let klass = this.state.configsContainerClass === "online-config-container-hide" ? "online-config-container-show" : "online-config-container-hide";
+    this.setState({ configsContainerClass: klass });
+  }
 
   render () {
     return (
@@ -33,7 +28,14 @@ export default class Splash extends React.Component {
           </div>
         </div>
         <div className="bottom">
-          <StartSplash />
+          <div className="bottom-top">
+            <StartSplash
+              toggleOnlineConfigs={this.toggleOnlineConfigs}
+              />
+            <OnlineConfigs
+              configsContainerClass={this.state.configsContainerClass}
+              />
+          </div>
           <AuthSplash />
         </div>
       </div>

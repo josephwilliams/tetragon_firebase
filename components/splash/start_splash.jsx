@@ -12,7 +12,8 @@ class StartSplash extends React.Component {
   render () {
     return (
     <div className="start-splash-container">
-      <div className="auth-option">
+      <div className="auth-option"
+           onClick={() => this.props.toggleOnlineConfigs()}>
         play online
       </div>
       <div className="auth-option"
