@@ -21,8 +21,10 @@
     "firebase-auth": "^0.1.2",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
+    "react-mixin": "^3.0.5",
     "react-modal": "^1.4.0",
     "react-router": "^2.7.0",
+    "reactfire": "^1.0.0",
     "webpack": "^1.13.1"
   }
 }

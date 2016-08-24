@@ -2,6 +2,7 @@ import React from 'react';
 import StartSplash from './start_splash';
 import AuthSplash from './auth_splash';
 import OnlineConfigs from './online_configs';
+import FirebaseConfig from '../../js/firebase_config';
 
 var firebase = require('firebase/app');
 require('firebase/auth');
@@ -10,13 +11,25 @@ require('firebase/database');
 export default class Splash extends React.Component {
   constructor () {
     super();
-    this.state = { configsContainerClass: "online-config-container-hide" };
+    this.state = {
+      configsContainerClass: "online-config-container-hide",
+      onlineConfigLog: []
+     };
     this.toggleOnlineConfigs = this.toggleOnlineConfigs.bind(this);
   }
 
   toggleOnlineConfigs () {
     let klass = this.state.configsContainerClass === "online-config-container-hide" ? "online-config-container-show" : "online-config-container-hide";
     this.setState({ configsContainerClass: klass });
+    this.initiateOnline();
+  }
+
+  initiateOnline () {
+    let user = firebase.auth().currentUser;
+    let config = new FirebaseConfig(user);
+    console.log("config", config);
+    console.log("config log", config.log);
+    this.setState({ onlineConfigLog: config.log });
   }
 
   render () {
@@ -34,6 +47,7 @@ export default class Splash extends React.Component {
               />
             <OnlineConfigs
               configsContainerClass={this.state.configsContainerClass}
+              configLogs={this.state.onlineConfigLog}
               />
           </div>
           <AuthSplash />

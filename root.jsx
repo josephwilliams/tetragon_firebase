@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import TwoPlayerGame from './components/game/game_comp';
+import OnlineGame from './components/game/game_online_comp';
 import Splash from './components/splash/splash';
 
 //Router
@@ -32,6 +33,7 @@ var routes = (
       <IndexRoute component={Splash} />
       <Route path="splash" component={Splash} />
       <Route path="two_player_game" component={TwoPlayerGame} />
+      <Route path="online_game" component={OnlineGame} />
     </Route>
   </Router>
 );
