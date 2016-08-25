@@ -19,8 +19,10 @@ export default class GameConfigs {
     let user = this.players[0];
     let note1 = "Matchmaking has begun";
     let note2 = "Player 1: Username: " + user.displayName;
+    let note3 = "Player1 user ID: " + user.uid;
     this.log.push(note1);
     this.log.push(note2);
+    this.log.push(note3);
   }
 
   getNewGameKey () {
