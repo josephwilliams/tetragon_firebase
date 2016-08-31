@@ -22,7 +22,7 @@ const PLAYERS_LOCATION = 'player_list';
 const PLAYER_DATA_LOCATION = 'player_data';
 
 export default class GameConfigs {
-  constructor (user) {
+  constructor (user, permitGameStart) {
     this.log = []; // list of happenings and IDs
     this.gameKey = null; // should be set on initialization of GameConfig class
     this.player = user;
@@ -34,8 +34,8 @@ export default class GameConfigs {
   acknowledgeUser () {
     let user = this.player;
     let note1 = "Matchmaking has begun";
-    let note2 = "Player 1: Username: " + user.displayName;
-    let note3 = "Player1 user ID: " + user.uid;
+    let note2 = "Player Username: " + user.displayName;
+    let note3 = "Player ID: " + user.uid;
     this.log.push(note1);
     this.log.push(note2);
     this.log.push(note3);
@@ -46,7 +46,7 @@ export default class GameConfigs {
     const newGameKey = firebase.database().ref().child('games').push().key;
     this.gameKey = newGameKey;
     let newGame = "New game initialized";
-    let newGameConfigs = "Game id: " + newGameKey;
+    let newGameConfigs = "Game ID: " + newGameKey;
     this.log.push(newGame);
     this.log.push(newGameConfigs);
   }
@@ -63,6 +63,10 @@ export default class GameConfigs {
         if (playerList.length === 1) {
           // set current game to game key and call initiate matchmaking
           this.gameKey = key;
+          let gameNote = "Found open game";
+          let gameNote2 = "Open Game ID: " + this.gameKey;
+          this.log.push(gameNote);
+          this.log.push(gameNote2);
           return this.initiateMatchmaking();
         }
       }
@@ -96,12 +100,11 @@ export default class GameConfigs {
   playGame (myPlayerNumber, userId, justJoinedGame, gameRef) {
     console.log("playGame called");
     var playerDataRef = gameRef.child(PLAYER_DATA_LOCATION).child(myPlayerNumber);
-    alert('You are player number ' + (myPlayerNumber + 1) +
-    '.  Your data will be located at ' + playerDataRef.toString());
-
+      permitGameStart();
     if (justJoinedGame) {
-      alert('Doing first-time initialization of data.');
+      // alert('Doing first-time initialization of data.');
       playerDataRef.set({userId: userId, state: 'game state'});
+      permitGameStart();
     }
   }
 
@@ -141,18 +144,16 @@ export default class GameConfigs {
         return playerList;
       }
 
-      console.log("players list", playerList);
-
       // Abort transaction and tell completion callback we failed to join.
       myPlayerNumber = null;
     }, function (error, committed) {
       // Transaction has completed.  Check if it succeeded or we were already in
       // the game and so it was aborted.
       if (committed || alreadyInGame) {
-        console.log("successful join. player #; userId, gameRef", myPlayerNumber, userId, gameRef);
+        console.log("Successful join.", myPlayerNumber, userId, gameRef);
         this.playGame(myPlayerNumber, userId, !alreadyInGame, gameRef);
       } else {
-        console.log("can't join game; game is full?");
+        console.log("Can't join game.");
       }
     }.bind(this));
   }

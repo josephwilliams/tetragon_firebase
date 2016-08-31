@@ -3,6 +3,7 @@ import StartSplash from './start_splash';
 import AuthSplash from './auth_splash';
 import OnlineConfigs from './online_configs';
 import FirebaseConfig from '../../js/firebase_config';
+const hashHistory = require('react-router').hashHistory;
 
 var firebase = require('firebase/app');
 require('firebase/auth');
@@ -24,9 +25,13 @@ export default class Splash extends React.Component {
     this.initiateOnline();
   }
 
+  linkToGame () {
+    hashHistory.push('online_game');
+  }
+
   initiateOnline () {
     let user = firebase.auth().currentUser;
-    let config = new FirebaseConfig(user);
+    let config = new FirebaseConfig(user, this.linkToGame.bind(this));
     console.log("config", config);
     console.log("config log", config.log);
     this.setState({ onlineConfigLog: config.log });

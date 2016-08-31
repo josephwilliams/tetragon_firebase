@@ -26559,6 +26559,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	var hashHistory = __webpack_require__(237).hashHistory;
+	
 	var firebase = __webpack_require__(204);
 	__webpack_require__(206);
 	__webpack_require__(208);
@@ -26587,10 +26589,15 @@
 	      this.initiateOnline();
 	    }
 	  }, {
+	    key: 'linkToGame',
+	    value: function linkToGame() {
+	      hashHistory.push('online_game');
+	    }
+	  }, {
 	    key: 'initiateOnline',
 	    value: function initiateOnline() {
 	      var user = firebase.auth().currentUser;
-	      var config = new _firebase_config2.default(user);
+	      var config = new _firebase_config2.default(user, this.linkToGame.bind(this));
 	      console.log("config", config);
 	      console.log("config log", config.log);
 	      this.setState({ onlineConfigLog: config.log });
@@ -29626,7 +29633,7 @@
 	var PLAYER_DATA_LOCATION = 'player_data';
 	
 	var GameConfigs = function () {
-	  function GameConfigs(user) {
+	  function GameConfigs(user, permitGameStart) {
 	    _classCallCheck(this, GameConfigs);
 	
 	    this.log = []; // list of happenings and IDs
@@ -29642,8 +29649,8 @@
 	    value: function acknowledgeUser() {
 	      var user = this.player;
 	      var note1 = "Matchmaking has begun";
-	      var note2 = "Player 1: Username: " + user.displayName;
-	      var note3 = "Player1 user ID: " + user.uid;
+	      var note2 = "Player Username: " + user.displayName;
+	      var note3 = "Player ID: " + user.uid;
 	      this.log.push(note1);
 	      this.log.push(note2);
 	      this.log.push(note3);
@@ -29655,7 +29662,7 @@
 	      var newGameKey = firebase.database().ref().child('games').push().key;
 	      this.gameKey = newGameKey;
 	      var newGame = "New game initialized";
-	      var newGameConfigs = "Game id: " + newGameKey;
+	      var newGameConfigs = "Game ID: " + newGameKey;
 	      this.log.push(newGame);
 	      this.log.push(newGameConfigs);
 	    }
@@ -29673,6 +29680,10 @@
 	          if (playerList.length === 1) {
 	            // set current game to game key and call initiate matchmaking
 	            this.gameKey = key;
+	            var gameNote = "Found open game";
+	            var gameNote2 = "Open Game ID: " + this.gameKey;
+	            this.log.push(gameNote);
+	            this.log.push(gameNote2);
 	            return this.initiateMatchmaking();
 	          }
 	        }
@@ -29711,11 +29722,11 @@
 	    value: function playGame(myPlayerNumber, userId, justJoinedGame, gameRef) {
 	      console.log("playGame called");
 	      var playerDataRef = gameRef.child(PLAYER_DATA_LOCATION).child(myPlayerNumber);
-	      alert('You are player number ' + (myPlayerNumber + 1) + '.  Your data will be located at ' + playerDataRef.toString());
-	
+	      permitGameStart();
 	      if (justJoinedGame) {
-	        alert('Doing first-time initialization of data.');
+	        // alert('Doing first-time initialization of data.');
 	        playerDataRef.set({ userId: userId, state: 'game state' });
+	        permitGameStart();
 	      }
 	    }
 	
@@ -29759,18 +29770,16 @@
 	          return playerList;
 	        }
 	
-	        console.log("players list", playerList);
-	
 	        // Abort transaction and tell completion callback we failed to join.
 	        myPlayerNumber = null;
 	      }, function (error, committed) {
 	        // Transaction has completed.  Check if it succeeded or we were already in
 	        // the game and so it was aborted.
 	        if (committed || alreadyInGame) {
-	          console.log("successful join. player #; userId, gameRef", myPlayerNumber, userId, gameRef);
+	          console.log("Successful join.", myPlayerNumber, userId, gameRef);
 	          this.playGame(myPlayerNumber, userId, !alreadyInGame, gameRef);
 	        } else {
-	          console.log("can't join game; game is full?");
+	          console.log("Can't join game.");
 	        }
 	      }.bind(this));
 	    }
