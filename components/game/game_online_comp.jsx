@@ -3,14 +3,17 @@ import Board from '../../js/board';
 import BoardComponent from './board_comp';
 
 // firebase app and database
-import Firebase from 'firebase';
-// var firebase = require('firebase/app');
+var firebase = require('firebase/app');
 require('firebase/auth');
 require('firebase/database');
-import reactMixin from 'react-mixin';
-import ReactFireMixin from 'reactfire';
 
-// const ref = new Firebase('https://<APPNAME>.firebaseio.com/games');
+var Rebase = require('re-base');
+var base = Rebase.createClass({
+  apiKey: "AIzaSyCyutMsgN0n5ErnDaX9mgvoQtWEiqXix9Y",
+  authDomain: "tetragon-3e324.firebaseapp.com",
+  databaseURL: "https://tetragon-3e324.firebaseio.com",
+  storageBucket: "",
+});
 
 class Game extends React.Component {
   constructor (props) {
@@ -24,14 +27,14 @@ class Game extends React.Component {
 
   componentDidMount () {
     // listen for change to board from database; if so, update board in state
-    let gameRef = firebase.database().ref('games/' + gameId + '/board');
-    this.bindAsArray(boardRef, 'board');
-
-    // gameRef.on('value', function(snapshot) {
-    //   console.log("snapshot", snapshot);
-    //   let updatedBoard = snapshot.val();
-    //   this.setState({ board: updatedBoard });
-    // });
+    base.syncState(`board`, {
+      context: this,
+      state: 'board',
+      asArray: false,
+      then (newBoard) {
+        console.log("new board", newBoard);
+      }
+    });
   }
 
   updateBoard (coords) {
@@ -67,7 +70,5 @@ class Game extends React.Component {
     )
   }
 }
-
-reactMixin(Game.prototype, ReactFireMixin)
 
 export default Game;

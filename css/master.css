@@ -433,12 +433,12 @@ h5 {
   width: 0px;
   /*border: 1px solid rgba(255, 255, 255, 0.75);*/
   transition: all 2s ease-out;
-  /*display: none;*/
+  display: none;
 }
 
 .online-config-container-show {
   width: 270px;
-  height: 150px;
+  text-align: center;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -462,4 +462,24 @@ h5 {
   font-size: 14px;
   font-weight: 100;
   color: rgba(255, 255, 255, 0.77);
+}
+
+.online-config-container-show .start-button {
+  font-family: 'Bungee Hairline', cursive;
+  font-weight: 900;
+  font-size: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.62);
+  padding: 5px 8px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.56);
+  box-shadow: 0px 0px 10px rgba(255, 244, 244, 0.54);
+  margin: 10px;
+  cursor: pointer;
+  color: black;
+  transition: all ease 0.6s;
+}
+
+.online-config-container-show .start-button:hover {
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.75);
 }
