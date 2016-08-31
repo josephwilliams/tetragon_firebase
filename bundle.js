@@ -29665,6 +29665,8 @@
 	      var newGameConfigs = "Game ID: " + newGameKey;
 	      this.log.push(newGame);
 	      this.log.push(newGameConfigs);
+	
+	      return this.initiateMatchmaking();
 	    }
 	  }, {
 	    key: 'checkOpenGame',
@@ -29689,20 +29691,8 @@
 	        }
 	      }.bind(this));
 	
-	      this.getNewGameKey();
+	      return this.getNewGameKey();
 	    }
-	
-	    // re-base's synced state will likely render this method useless
-	    // updateBoard (board) {
-	    //   let postData = {
-	    //     players: null,
-	    //     board: board
-	    //   };
-	    //
-	    //   let updates = {};
-	    //   updates['/games/' + this.gameKey] = postData;
-	    //   return firebase.database().ref().update(updates);
-	    // }
 	
 	    // Instantiate multiplayer game
 	
