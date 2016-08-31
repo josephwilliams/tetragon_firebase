@@ -23550,11 +23550,14 @@
 	
 	var Board = function () {
 	  function Board() {
+	    var player1 = arguments.length <= 0 || arguments[0] === undefined ? new _player2.default('player 1', 1, 'Red') : arguments[0];
+	    var player2 = arguments.length <= 1 || arguments[1] === undefined ? new _player2.default('player 2', 2, 'Blue') : arguments[1];
+	
 	    _classCallCheck(this, Board);
 	
 	    this.grid = [];
-	    this.player1 = new _player2.default('player 1', 1, 'Red');
-	    this.player2 = new _player2.default('player 2', 2, 'Blue');
+	    this.player1 = player1;
+	    this.player2 = player2;
 	    this.currentPlayer = this.player1;
 	    this.currentMove = 1;
 	    this.firstSelect = null;
@@ -29603,12 +29606,6 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _board = __webpack_require__(193);
-	
-	var _board2 = _interopRequireDefault(_board);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	// firebase app and database
@@ -29680,7 +29677,6 @@
 	        for (var key in list) {
 	          var game = list[key];
 	          var playerList = game.player_list;
-	          console.log("playerList", playerList);
 	          if (playerList.length === 1) {
 	            // set current game to game key and call initiate matchmaking
 	            this.gameKey = key;
@@ -29714,12 +29710,11 @@
 	    value: function playGame(myPlayerNumber, userId, justJoinedGame, gameRef) {
 	      console.log("playGame called");
 	      var playerDataRef = gameRef.child(PLAYER_DATA_LOCATION).child(myPlayerNumber);
-	      this.permitGameStart();
 	      if (justJoinedGame) {
 	        // alert('Doing first-time initialization of data.');
 	        playerDataRef.set({ userId: userId, state: 'game state' });
-	        this.permitGameStart();
 	      }
+	      return this.permitGameStart();
 	    }
 	
 	    // Use transaction() to assign a player number, then call playGame().
@@ -29731,49 +29726,51 @@
 	      var myPlayerNumber,
 	          alreadyInGame = false;
 	
-	      playerListRef.transaction(function (playerList) {
-	        // Attempt to (re)join the given game. Notes:
-	        //
-	        // 1. Upon very first call, playerList will likely appear null (even if the
-	        // list isn't empty), since Firebase runs the update function optimistically
-	        // before it receives any data.
-	        // 2. The list is assumed not to have any gaps (once a player joins, they
-	        // don't leave).
-	        // 3. Our update function sets some external variables but doesn't act on
-	        // them until the completion callback, since the update function may be
-	        // called multiple times with different data.
-	        if (playerList === null) {
-	          playerList = [];
-	        }
+	      return this.playGame(myPlayerNumber, userId, !alreadyInGame, gameRef);
 	
-	        for (var i = 0; i < playerList.length; i++) {
-	          if (playerList[i] === userId) {
-	            // Already seated so abort transaction to not unnecessarily update playerList.
-	            alreadyInGame = true;
-	            myPlayerNumber = i; // Tell completion callback which seat we have.
-	            return;
-	          }
-	        }
-	
-	        if (i < NUM_PLAYERS) {
-	          // Empty seat is available so grab it and attempt to commit modified playerList.
-	          playerList[i] = userId; // Reserve our seat.
-	          myPlayerNumber = i; // Tell completion callback which seat we reserved.
-	          return playerList;
-	        }
-	
-	        // Abort transaction and tell completion callback we failed to join.
-	        myPlayerNumber = null;
-	      }, function (error, committed) {
-	        // Transaction has completed.  Check if it succeeded or we were already in
-	        // the game and so it was aborted.
-	        if (committed || alreadyInGame) {
-	          console.log("Successful join.", myPlayerNumber, userId, gameRef);
-	          this.playGame(myPlayerNumber, userId, !alreadyInGame, gameRef);
-	        } else {
-	          console.log("Can't join game.");
-	        }
-	      }.bind(this));
+	      // playerListRef.transaction(function(playerList) {
+	      //   // Attempt to (re)join the given game. Notes:
+	      //   //
+	      //   // 1. Upon very first call, playerList will likely appear null (even if the
+	      //   // list isn't empty), since Firebase runs the update function optimistically
+	      //   // before it receives any data.
+	      //   // 2. The list is assumed not to have any gaps (once a player joins, they
+	      //   // don't leave).
+	      //   // 3. Our update function sets some external variables but doesn't act on
+	      //   // them until the completion callback, since the update function may be
+	      //   // called multiple times with different data.
+	      //   if (playerList === null) {
+	      //     playerList = [];
+	      //   }
+	      //
+	      //   for (var i = 0; i < playerList.length; i++) {
+	      //     if (playerList[i] === userId) {
+	      //       // Already seated so abort transaction to not unnecessarily update playerList.
+	      //       alreadyInGame = true;
+	      //       myPlayerNumber = i; // Tell completion callback which seat we have.
+	      //       return;
+	      //     }
+	      //   }
+	      //
+	      //   if (i < NUM_PLAYERS) {
+	      //     // Empty seat is available so grab it and attempt to commit modified playerList.
+	      //     playerList[i] = userId;  // Reserve our seat.
+	      //     myPlayerNumber = i; // Tell completion callback which seat we reserved.
+	      //     return playerList;
+	      //   }
+	      //
+	      //   // Abort transaction and tell completion callback we failed to join.
+	      //   myPlayerNumber = null;
+	      // }, function (error, committed) {
+	      //   // Transaction has completed.  Check if it succeeded or we were already in
+	      //   // the game and so it was aborted.
+	      //   if (committed || alreadyInGame) {
+	      //     console.log("Successful join.", myPlayerNumber, userId, gameRef);
+	      //     this.playGame(myPlayerNumber, userId, !alreadyInGame, gameRef);
+	      //   } else {
+	      //     console.log("Can't join game.");
+	      //   }
+	      // }.bind(this));
 	    }
 	  }]);
 	

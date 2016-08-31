@@ -2,10 +2,10 @@ import Player from './player';
 import GridShapes from './grid_shapes';
 
 export default class Board {
-  constructor () {
+  constructor (player1 = new Player('player 1', 1, 'Red'), player2 = new Player('player 2', 2, 'Blue')) {
     this.grid = [];
-    this.player1 = new Player('player 1', 1, 'Red');
-    this.player2 = new Player('player 2', 2, 'Blue');
+    this.player1 = player1;
+    this.player2 = player2;
     this.currentPlayer = this.player1;
     this.currentMove = 1;
     this.firstSelect = null;
