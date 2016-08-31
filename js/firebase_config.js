@@ -26,6 +26,7 @@ export default class GameConfigs {
     this.log = []; // list of happenings and IDs
     this.gameKey = null; // should be set on initialization of GameConfig class
     this.player = user;
+    this.permitGameStart = permitGameStart;
 
     this.acknowledgeUser(user);
     this.checkOpenGame();
@@ -62,6 +63,7 @@ export default class GameConfigs {
       for (let key in list) {
         let game = list[key];
         let playerList = game.player_list;
+        console.log("playerList", playerList);
         if (playerList.length === 1) {
           // set current game to game key and call initiate matchmaking
           this.gameKey = key;
@@ -90,11 +92,11 @@ export default class GameConfigs {
   playGame (myPlayerNumber, userId, justJoinedGame, gameRef) {
     console.log("playGame called");
     var playerDataRef = gameRef.child(PLAYER_DATA_LOCATION).child(myPlayerNumber);
-      permitGameStart();
+      this.permitGameStart();
     if (justJoinedGame) {
       // alert('Doing first-time initialization of data.');
       playerDataRef.set({userId: userId, state: 'game state'});
-      permitGameStart();
+      this.permitGameStart();
     }
   }
 
